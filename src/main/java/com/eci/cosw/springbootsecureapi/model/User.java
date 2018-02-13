@@ -19,6 +19,8 @@ public class User
 
     private String username;
 
+    private String image;
+
 
     public User()
     {
@@ -98,5 +100,13 @@ public class User
     {
         return "User{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", firstname='"
             + firstname + '\'' + '}';
+    }
+
+    public String getImage(){
+        return image;
+    }
+
+    public void setImage(String image){
+        this.image = image;
     }
 }

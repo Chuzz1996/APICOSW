@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,27 +40,63 @@ public class UserServiceImpl
     }
 
     @Override
-    public User getUser( Long id )
+    public User getUser( String username )
     {
-        return users.get( 0 );
+        User localUser = null;
+        for (int i =0;i<users.size() ;i++){
+            if(users.get(i).getUsername().equals(username)){
+                localUser=users.get(i);
+            }
+        }
+        return localUser;
     }
 
     @Override
-    public User createUser( User user )
+    public User createUser( User user )throws UserServiceException
     {
-        return users.get( 0 );
+        boolean res = false;
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).getUsername().equals(user.getUsername())){
+                res = true;
+                break;
+            }
+        }if(res){
+            throw new UserServiceException("User name is no available");
+        }else{
+            users.add(user);
+        }return user;
     }
 
     @Override
-    public User findUserByEmail( String email )
+    public User findUserByEmail( String email )throws UserServiceException
     {
-        return users.get( 0 );
+        User localUser=null;
+        for (int i =0;i<users.size();i++){
+            if(users.get(i).getEmail().equals(email)){
+                localUser=users.get(i);
+            }
+        }
+        if (localUser==null){
+            throw new UserServiceException ("No user found with the email address");
+        }
+        return localUser;
     }
 
     @Override
     public User findUserByEmailAndPassword( String email, String password )
     {
         return users.get( 0 );
+    }
+
+    @Override
+    public boolean registerUser(String username){
+        boolean res = false;
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).getUsername().equals(username)){
+                res = true;
+                break;
+            }
+        }return res;
     }
 
 }

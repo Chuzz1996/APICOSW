@@ -12,11 +12,13 @@ public interface UserService
 {
     List<User> getUsers();
 
-    User getUser( Long id );
+    User getUser( String username );
 
-    User createUser( User user );
+    User createUser( User user ) throws UserServiceException;
 
-    User findUserByEmail( String email );
+    User findUserByEmail( String email ) throws UserServiceException;
 
     User findUserByEmailAndPassword( String email, String password );
+
+    boolean registerUser(String username);
 }
