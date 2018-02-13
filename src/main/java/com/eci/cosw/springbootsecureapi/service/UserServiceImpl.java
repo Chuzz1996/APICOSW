@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 import java.util.ArrayList;
+import javax.servlet.ServletException;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class UserServiceImpl
     @PostConstruct
     private void populateSampleData()
     {
-        users.add( new User( "test@mail.com", "password", "Andres", "Perez" ) );
+        users.add( new User( "xyz","test@mail.com", "password", "Andres", "Perez","http://www.elcolombiano.com/documents/10157/0/580x376/0c0/580d365/none/11101/YFHC/image_content_30409342_20180204161416.jpg" ) );
     }
 
 
@@ -52,7 +53,7 @@ public class UserServiceImpl
     }
 
     @Override
-    public User createUser( User user )throws UserServiceException
+    public User createUser( User user )throws ServletException
     {
         boolean res = false;
         for(int i = 0; i < users.size(); i++){
@@ -61,14 +62,14 @@ public class UserServiceImpl
                 break;
             }
         }if(res){
-            throw new UserServiceException("User name is no available");
+            throw new ServletException("User name is no available");
         }else{
             users.add(user);
         }return user;
     }
 
     @Override
-    public User findUserByEmail( String email )throws UserServiceException
+    public User findUserByEmail( String email )throws ServletException
     {
         User localUser=null;
         for (int i =0;i<users.size();i++){
@@ -77,7 +78,7 @@ public class UserServiceImpl
             }
         }
         if (localUser==null){
-            throw new UserServiceException ("No user found with the email address");
+            throw new ServletException ("No user found with the email address");
         }
         return localUser;
     }
